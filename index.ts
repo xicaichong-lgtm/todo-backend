@@ -12,7 +12,7 @@ const prisma = new PrismaClient({ adapter })
 const fastify = Fastify({ logger: true })
 
 fastify.register(jwt, { secret: process.env.JWT_SECRET as string })
-fastify.register(cors, { origin: 'http://localhost:3001', methods: ['GET', 'POST', 'PATCH', 'DELETE'] })
+fastify.register(cors, { origin: process.env.FRONTEND_URL ?? 'http://localhost:3001', methods: ['GET', 'POST', 'PATCH', 'DELETE'] })
 
 const authenticate = async (request: any, reply: any) => {
   try {
@@ -96,7 +96,7 @@ fastify.post('/auth/login', async (request, reply) => {
   return { token }
 })
 
-fastify.listen({ port: 3000 }, (err) => {
+fastify.listen({ port: Number(process.env.PORT) || 3000, host: '0.0.0.0' }, (err) => {
   if (err) {
     fastify.log.error(err)
     process.exit(1)
