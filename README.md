@@ -2,12 +2,18 @@
 
 REST API for a TODO app with user authentication.
 
+**Live API:** https://todo-backend-ibcp.onrender.com
+**Live app:** https://todo-frontend-rzw4.onrender.com
+**Frontend repository:** https://github.com/xicaichong-lgtm/todo-frontend
+
+> Hosted on free tiers: the first request can take up to a minute while the server wakes up.
+
 **Tech stack:** Fastify, Prisma, PostgreSQL, JWT
 
-## Setup
+## Run locally
 
 1. Install Node.js and PostgreSQL.
-2. Copy `.env.example` to `.env` and fill in your PostgreSQL password and a JWT secret.
+2. Copy `.env.example` to `.env` and fill in the values.
 3. Install dependencies and set up the database:
 
 ```
@@ -22,6 +28,16 @@ npx prisma generate
 npx tsx index.ts
 ```
 
+## Environment variables
+
+
+| Name | Description |
+|------|-------------|
+| `DATABASE_URL` | PostgreSQL connection string |
+| `JWT_SECRET` | Secret used to sign login tokens |
+| `FRONTEND_URL` | Frontend address allowed by CORS (default `http://localhost:3001`) |
+| `PORT` | Server port (default `3000`) |
+
 ## API
 
 | Method | Endpoint | Description | Login required |
@@ -35,4 +51,7 @@ npx tsx index.ts
 
 Protected endpoints need the header `Authorization: Bearer <token>`.
 
-Frontend repository: https://github.com/xicaichong-lgtm/todo-frontend
+## Deployment
+
+- Web service on Render (build: `npm install --include=dev && npx prisma generate`, start: `npx tsx index.ts`)
+- PostgreSQL on Neon (tables created with `npx prisma migrate deploy`)
